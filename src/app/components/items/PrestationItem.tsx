@@ -14,8 +14,8 @@ export default function PrestationItem({
   image,
   title,
   children,
-  link = '',
-  linkText = '',
+  // link = '',
+  // linkText = '',
 }: Props) {
   return (
     <div className="text-center h-full flex flex-col items-center">
@@ -44,13 +44,13 @@ export default function PrestationItem({
         {children}
       </p>
 
-      {link !== '' && (
+      {/* {link !== '' && (
         <div className="mt-auto">
           <Link href={link}>
             <span className="button">{linkText}</span>
           </Link>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

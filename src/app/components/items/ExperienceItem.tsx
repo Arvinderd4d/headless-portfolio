@@ -3,16 +3,12 @@ import Image, { StaticImageData } from 'next/image';
 type Props = {
   logo: string | StaticImageData;
   title: string;
-  company: string;
-  year: string;
   excerpt: string;
 };
 
 export default function ExperienceItem({
   logo,
   title,
-  company,
-  year,
   excerpt,
 }: Props) {
   return (
@@ -20,7 +16,9 @@ export default function ExperienceItem({
       <div className="flex justify-center row-span-4">
         <Image
           src={logo}
-          alt={company}
+          alt=""
+          width={100}
+          height={100}
           style={{
             maxWidth: '100%',
             height: 'auto',
@@ -28,8 +26,6 @@ export default function ExperienceItem({
         />
       </div>
       <div className="text-white text-2xl font-medium">{title}</div>
-      <div className="uppercase text-white">{company}</div>
-      <div>{year}</div>
       <p className="mt-2 max-w-2xl leading-5">{excerpt}</p>
     </div>
   );

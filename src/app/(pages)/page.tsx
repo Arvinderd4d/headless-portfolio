@@ -14,12 +14,14 @@ import Layout from '@component/Layout';
 import LastProjects from '@component/portfolio/LastProjects';
 import PrestationsList from '@component/PrestationsList';
 import SectionTitle from '@component/SectionTitle';
-import ExpertiseJoomla from '@image/expertises/joomla.png';
-import ExpertisePrestashop from '@image/expertises/prestashop.png';
-import ExpertiseSymfony from '@image/expertises/symfony.png';
-import ExpertiseWordPress from '@image/expertises/wordpress.png';
 import ImageDiscoverTma from '@image/prestations/presentation-integration-web.jpeg';
 import { getCanonicalUrl, RouteLink } from '@lib/route';
+import { fetcher } from '@util/index';
+import {HomeContent} from '@graphql-query/home.graphql';
+import {HomeExpertise} from '@graphql-query/home-expertise.graphql';
+import {HomeServicesContent} from '../graphql/home-services.graphql';
+import { HomeArticleContent } from '../graphql/home-article-detail.graphql';
+import { HomeExpertiseContent, HomePageContent, HomePageServices, HomeArticleType } from '@type/graphql';
 
 export const metadata = {
   title:
@@ -31,20 +33,29 @@ export const metadata = {
   },
 };
 
-export default function Homepage() {
-  return (
+const getData = (id:string):Promise<HomePageContent>=> fetcher(HomeContent, {id:id})
+const getExpertise = (id:string):Promise<HomeExpertiseContent>=> fetcher(HomeExpertise, {id:id})
+const getServices = (slug:string): Promise<HomePageServices> =>
+fetcher(HomeServicesContent, {id:slug});
+const getArticleContent = (id:string):Promise<HomeArticleType> => fetcher(HomeArticleContent, {id:id});
+
+export default async function Homepage() {
+const {data} = await getData("cG9zdDoxMTM=");
+const {data:{page}} = await getExpertise("cG9zdDoxMTM=");
+const {data:{page:{homeServices}}} = await getServices("cG9zdDoxMTM=");
+const {data:{page:{homeArticleSection}}} = await getArticleContent("cG9zdDoxMTM");
+return (
     <Layout>
+      
       <div className="container">
         <SectionTitle
           className="mt-3 md:mt-0"
-          title="A propos"
-          content="Développeur Freelance créatif et innovant basé au coeur de La Rochelle et spécialisé dans la création de site internet. Depuis l'âge de 14 ans, je développe, compose et crée des projets web."
+          title={homeServices.title}
+          content={homeServices.description}
         />
 
         <div className="my-4 mx-auto text-xl sm:text-2xl max-w-4xl font-medium text-center text-white">
-          Je suis entouré d&apos;une équipe fondée de créatifs, designers et
-          développeurs. Nous travaillons ensemble pour créer des choses
-          inspirantes et engagées.
+        {homeServices.subTitle}
         </div>
 
         <PrestationsList />
@@ -71,31 +82,21 @@ export default function Homepage() {
         <div className="container relative z-10 py-5 xl:py-0 md:-my-10">
           <div className="md:w-1/2">
             <h2 className="text-2xl sm:text-3xl text-white font-medium mb-3">
-              Besoin d’une estimation de votre site
-              <br className="hidden sm:block" />
-              et/ou de sa maintenance
+              {data.page.home.masterPieceTitle}
             </h2>
-            <p>
-              Simple et en toute transparence, n’hésitez pas à me demander une
-              estimation gratuite pour la création de votre site web ou de la
-              maintenance applicative.
-            </p>
-            <p>
-              Vous recevrez dans la journée votre devis et nous pourrons prendre
-              contact pour définir ensemble les tâches.
-            </p>
+            <div className="mt-2 text-xl text-gray-light" dangerouslySetInnerHTML={{__html:  data.page.home.masterPieceDescription}} />
 
             <div className="flex flex-wrap flex-start">
-              <Link href={RouteLink.contact}>
+              <Link href={RouteLink.aboutMe}>
                 <span className="button mt-3 mr-2">
-                  Demandez votre devis maintenant
+                  Find out more
                 </span>
               </Link>
-              <Link href={RouteLink.prestationTma}>
+              {/* <Link href={RouteLink.prestationTma}>
                 <span className="button-outline mt-3">
                   Mes offres de maintenance
                 </span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -109,12 +110,11 @@ export default function Homepage() {
       <div className="bg-gray-darker pt-8 md:pt-3">
         <div className="container mb-10 lg:-mb-8 z-10 relative">
           <SectionTitle
-            content="Consultez mes dernières créations, atteignant tous, l’esthétique du détail et de la fonctionnalité qui me démarque du reste en tant que développeur Freelance."
+            content="Check out my latest creations, achieving all the aesthetics of detail and functionality that sets me apart from the rest as a Freelance Developer.            "
             title="Projets"
           />
 
           <Suspense fallback={<p>Loading</p>}>
-            {/* @ts-expect-error Server Component */}
             <LastProjects />
           </Suspense>
         </div>
@@ -124,7 +124,7 @@ export default function Homepage() {
           className="h-10 sm:h-16 md:h-25 lg:h-36 xl:h-45"
           cta={{
             icon: <MoreIcon />,
-            title: ['Voir tous', 'les projets'],
+            title: ['View All', 'Projets'],
             href: RouteLink.portfolio,
           }}
         />
@@ -132,18 +132,36 @@ export default function Homepage() {
 
       <div className="container">
         <SectionTitle
-          title="Expertises"
-          content="Je propose un large éventail de services axés sur les résultats pour les marques, en veillant à ce que leur présence en ligne reflète réellement leurs objectifs et leurs inspirations."
+          title={page.homeExpertise.expertiseTitle}
+          content={page.homeExpertise.expertiseDescription}
         />
 
         <div className="my-4 grid md:grid-cols-2 gap-x-2 gap-y-6">
           <ExpertiseItem
-            title="WordPress"
-            excerpt="WordPress est le plus populaire des CMS en ce moment, il vous permet d’administrer facilement votre site et de personnaliser intégralement le frontoffice."
+            title={page.homeExpertise.expertiseSubtitleOne}
+            excerpt={page.homeExpertise.expertiseDescriptionOne}
             link={RouteLink.prestationWordPress}
-            image={ExpertiseWordPress}
+            image={page.homeExpertise.expertiseImageOne.sourceUrl}
           />
           <ExpertiseItem
+            title={page.homeExpertise.expertiseSubtitleTwo}
+            excerpt={page.homeExpertise.expertiseDescriptionTwo}
+            link={RouteLink.prestationWordPress}
+            image={page.homeExpertise.expertiseImageTwo.sourceUrl}
+          />
+          <ExpertiseItem
+            title={page.homeExpertise.expertiseSubtitleThree}
+            excerpt={page.homeExpertise.expertiseDescriptionThree}
+            link={RouteLink.prestationWordPress}
+            image={page.homeExpertise.expertiseImageThree.sourceUrl}
+          />
+          <ExpertiseItem
+            title={page.homeExpertise.expertiseSubtitleFour}
+            excerpt={page.homeExpertise.expertiseDescriptionFour}
+            link={RouteLink.prestationWordPress}
+            image={page.homeExpertise.expertiseImageFour.sourceUrl}
+          />
+          {/* <ExpertiseItem
             title="Symfony"
             excerpt="Symfony est un framework PHP qui nous permet d’accélèrer le développement de sites ou d’applications grace à sa méthodologie et architecture évolutive."
             link={RouteLink.prestationSymfony}
@@ -160,7 +178,7 @@ export default function Homepage() {
             excerpt="Joomla est un CMS puissant en terme de pérénité, modularité et de puissance dans la gestion de contenu et de l’ajout de vos développement spécifique."
             link={RouteLink.portfolio}
             image={ExpertiseJoomla}
-          />
+          /> */}
         </div>
       </div>
 
@@ -169,14 +187,11 @@ export default function Homepage() {
       <div className="bg-gray-darker">
         <div className="container py-4">
           <SectionTitle
-            content={
-              "Passionné par les nouvelles technologies, j'adore partager mes compétences et mes découvertes avec des personnes qui ont cette même passion pour le web !"
-            }
-            title="Articles"
+            content={homeArticleSection.articleDescription}
+            title={homeArticleSection.articleTitle}
           />
 
           <Suspense fallback={<p>Loading</p>}>
-            {/* @ts-expect-error Server Component */}
             <LastArticles />
           </Suspense>
         </div>
@@ -187,7 +202,7 @@ export default function Homepage() {
           bgCorner="fill-orange"
           cta={{
             icon: <LeafHeartIcon />,
-            title: ['Voir tous', 'les articles'],
+            title: ['View All', 'Articles'],
             href: RouteLink.blog,
           }}
         />
@@ -196,13 +211,14 @@ export default function Homepage() {
       <div className="container mt-8 md:mt-0">
         <SectionTitle
           content={
-            "Pour toute demande ou devis, n'hésitez pas à me contacter en remplissant le formulaire ci-dessous, je serais ravis de vous répondre."
+            "For any request or estimate, do not hesitate to contact me by filling out the form below, I would be delighted to answer you."
           }
           title="Contact"
         />
 
         <ContactForm />
       </div>
+
     </Layout>
   );
 }

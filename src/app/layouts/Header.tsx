@@ -42,7 +42,7 @@ export default function Header({
           </h1>
           <div className="hidden sm:grid mt-2 uppercase text-xs grid-flow-col gap-1 justify-start text-white opacity-80">
             <Link href="/">
-              <span className="underline">Accueil</span>
+              <span className="underline">Home</span>
             </Link>
             {breadcrumb.length > 0 &&
               breadcrumb.map((bc) => (
@@ -59,15 +59,11 @@ export default function Header({
         </div>
       ) : (
         <h1 className="container text-center flex flex-col items-center text-white mt-7 mb-6 md:mb-0">
-          <span className="text-orange text-6xl md:text-8xl font-thin">
-            inRage
+          <span className="text-orange text-6xl md:text-8xl font-bold">
+            Digital4Design
           </span>
-          <span className="text-3xl md:text-5xl mt-2">Pascal GAULT</span>
-          <span className="text-xl md:text-2xl mt-2">
-            Développeur Freelance spécialisé dans
-            <br />
-            la création de sites web
-          </span>
+          <span className="text-3xl md:text-5xl mt-2">D4D</span>
+          <span className="text-xl md:text-2xl mt-2">Freelance developer specializing in the creation of websites</span>
         </h1>
       )}
 

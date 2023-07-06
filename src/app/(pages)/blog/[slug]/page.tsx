@@ -5,6 +5,7 @@ import Layout from '@component/Layout';
 import SectionTitle from '@component/SectionTitle';
 import allBlogPostsSlug from '@graphql-query/all-blog-posts-slug.graphql';
 import getSinglePost from '@graphql-query/single-post.graphql';
+import Image from 'next/image';
 import {
   getCanonicalUrl,
   replaceBackendUrlContent,
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: Props) {
 
   return {
     title: post.seo.title,
-    description: post.seo.metaDesc,
+    description: post.seo.metadesc,
     alternates: {
       canonical: getCanonicalUrl(`${RouteLink.blog}/${post.slug}`),
     },
@@ -48,9 +49,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function Page({ params }: Props) {
-  const {
-    data: { post, posts },
-  } = await getData(params.slug);
+  const {data: { post, posts }} = await getData(params.slug);
 
   const shuffled = posts.edges
     .map((value) => ({ value, sort: Math.random() }))
@@ -59,16 +58,21 @@ export default async function Page({ params }: Props) {
 
   const relatedPosts = shuffled.slice(0, 2);
 
+  // {console.log(post, 'post is here...')}
   return (
     <Layout
       breadcrumbs={[{ link: RouteLink.blog, title: 'Blog' }]}
       title={post.title}
     >
       <div className="container">
+        {
+          post?.featuredImage?.node?.sourceUrl && (
+            <Image src={post?.featuredImage?.node?.sourceUrl} alt=""  width="500" height="400" style={{margin: 'auto', height:'auto'}} />
+            )
+        }
         <PostBody content={replaceBackendUrlContent(post.content)} />
       </div>
 
-      {/* @ts-expect-error Server Component */}
       <PostComments postDatabaseId={post.databaseId} identifier={post.id} />
 
       <div className="container">

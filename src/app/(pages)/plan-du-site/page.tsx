@@ -29,7 +29,7 @@ export default async function Sitemap() {
 
             <ul className="styled-list">
               <li>
-                <Link href="/">Accueil</Link>
+                <Link href="/">Home</Link>
               </li>
               <li>
                 <Link href={RouteLink.aboutMe}>A propos de moi</Link>

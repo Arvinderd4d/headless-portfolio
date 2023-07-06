@@ -7,14 +7,18 @@ const { withSentryConfig } = require('@sentry/nextjs');
  * */
 
 const nextConfig = {
+  env: {
+    PUBLIC_URL: '/',
+  },
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['i2.wp.com', 'i0.wp.com', 'i1.wp.com'],
+    domains: ['i2.wp.com', 'i0.wp.com', 'i1.wp.com','localhost'],
   },
   experimental: {
     appDir: true,
   },
+  
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(graphql|gql)/,
@@ -27,8 +31,11 @@ const nextConfig = {
   sentry: {
     hideSourceMaps: true,
   },
+  
 };
 
 module.exports = withSentryConfig(nextConfig, {
   silent: true,
 });
+
+

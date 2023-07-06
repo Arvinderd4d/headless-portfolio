@@ -1,5 +1,5 @@
 query projectSlugs { 
-  projets(first: 1000) { 
+  projets { 
     edges {
       node {
         slug

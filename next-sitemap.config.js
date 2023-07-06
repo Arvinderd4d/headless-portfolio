@@ -1,4 +1,4 @@
 module.exports = {
-  siteUrl: 'https://www.inrage.fr',
+  siteUrl: 'http://localhost:3000',
   generateRobotsTxt: true,
 };

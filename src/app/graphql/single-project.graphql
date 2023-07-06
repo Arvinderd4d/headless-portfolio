@@ -13,7 +13,7 @@ query ProjectBySlug($id: ID!) {
 			edges {
 				node {
 					name
-					acfDetail {
+					acfdetail {
 						image {
 							sourceUrl
 						}
@@ -30,7 +30,7 @@ query ProjectBySlug($id: ID!) {
 			}
 		}
 		detail {
-			websiteLink
+			websitelink
 			year
 			missions
 			excerpt

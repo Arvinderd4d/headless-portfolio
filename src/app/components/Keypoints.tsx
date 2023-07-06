@@ -29,22 +29,22 @@ export default function Keypoints() {
         <KeypointItem
           icon={<CupIcon className="h-3 md:h-5" />}
           value="2356"
-          label="tasses à café"
+          label="Coffee Mugs"
         />
         <KeypointItem
           icon={<ThumbIcon className="h-3 md:h-5" />}
           value="352"
-          label="projets"
+          label="Projects"
         />
         <KeypointItem
           icon={<AchieveIcon className="h-3 md:h-5" />}
-          value="15 années"
-          label="d'expérience"
+          value="15 years"
+          label="of experience "
         />
         <KeypointItem
           icon={<LeafHeartIcon className="h-3 md:h-5" />}
           value="150+"
-          label="idées à développer"
+          label="ideas to develop          "
         />
       </div>
       <Diagonal

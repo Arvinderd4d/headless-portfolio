@@ -4,12 +4,12 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useWindowSize } from 'react-use';
 
-import FeaturedProjectMenu from '@component/FeaturedProjectMenu';
 import Link from '@component/NoScrollLink';
-import FeaturedProjectImage from '@image/featured-projects/parapharmaciemoinschere.jpeg';
-import ExpertPrestashop from '@image/platinum-300x300.png';
-import ExpertWordPress from '@image/wordpress-expert.png';
 import { RouteLink } from '@lib/route';
+import Logo from '@image/logo.png';
+// import { fetcher } from '@util/index';
+// import {HeaderMenu} from '@graphql-query/header-menu.graphql';
+// import { HeaderMenuContent } from '@type/graphql';
 
 type LinkProps = {
   title: string;
@@ -33,7 +33,7 @@ function LinkItem({
           <span
             onClick={() => closePrimaryNav()}
             className={`uppercase block text-lg pt-2 lg:py-2 group-hover:text-orange ${
-              isActive ? 'text-orange' : 'text-white'
+              isActive ? 'group-text-orange' : 'group-text-white'
             }`}
           >
             {title}
@@ -65,15 +65,14 @@ type Props = {
   isSticky?: boolean;
 };
 
-export default function NavPrimary({ isSticky = false }: Props) {
+// const getMenu = (id:string):Promise<HeaderMenuContent> => fetcher(HeaderMenu, {id:id})
+
+export default  function NavPrimary({ isSticky = false }: Props) {
+  // const data = await getMenu("dGVybToxMA==")
+  // console.log(data, 'this is the data...');
   const pathname = usePathname();
   const { width } = useWindowSize(1024);
   const [isOpen, setOpen] = useState(false);
-
-  const n1TitleClassnames =
-    'uppercase text-white text-sm lg:text-base font-bold block hover:text-orange my-1';
-  const n2TitleClassnames =
-    'text-white font-medium text-orange text-sm leading-4 hover:text-orange-dark';
 
   const toggleNavPrimary = useCallback(() => {
     setOpen((r) => !r);
@@ -91,7 +90,7 @@ export default function NavPrimary({ isSticky = false }: Props) {
         <div className="container flex items-center justify-between py-2">
           <Link href="/">
             <Image
-              src="/logo.svg"
+              src={Logo}
               width="150"
               height="56"
               alt="Pascal GAULT, développeur Freelance sur La Rochelle"
@@ -119,7 +118,11 @@ export default function NavPrimary({ isSticky = false }: Props) {
               />
             </svg>
           </button>
-
+          {
+              // data.menu.menuItems.nodes.map(({label}) => {
+              //   return <a>{label}</a>
+              // })
+            }
           <div
             className={`nav-menu ${
               width < 1025 && isOpen
@@ -127,186 +130,26 @@ export default function NavPrimary({ isSticky = false }: Props) {
                 : 'hidden relative space-x-3'
             } lg:flex items-center`}
           >
+         
+            <LinkItem
+              closePrimaryNav={() => setOpen(false)}
+              isActive={pathname === RouteLink.home}
+              href={RouteLink.home}
+              title="Home"
+            />
             <LinkItem
               closePrimaryNav={() => setOpen(false)}
               isActive={pathname === RouteLink.aboutMe}
               href={RouteLink.aboutMe}
-              title="À propos de moi"
+              title="About Us"
             />
-            <LinkItem
-              closePrimaryNav={() => setOpen(false)}
-              isActive={pathname === RouteLink.prestations}
-              href={RouteLink.prestations}
-              title="Prestations"
-            >
-              <div className="flex justify-evenly lg:justify-start">
-                <div>
-                  <Link href={RouteLink.prestationWeb}>
-                    <span
-                      onClick={() => setOpen(false)}
-                      className={n1TitleClassnames}
-                    >
-                      Création de site
-                    </span>
-                  </Link>
-                  <ul className="lg:list-disc lg:pl-2 marker:text-orange-dark">
-                    <li>
-                      <Link href={RouteLink.prestationWordPress}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          WordPress
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href={RouteLink.prestationPrestashop}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          Prestashop
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href={RouteLink.prestationSymfony}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          Symfony
-                        </span>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div className="ml-6">
-                  <Link href={RouteLink.prestationTma}>
-                    <span
-                      onClick={() => setOpen(false)}
-                      className={n1TitleClassnames}
-                    >
-                      Maintenance de site
-                    </span>
-                  </Link>
-                  <ul className="lg:list-disc lg:pl-2 marker:text-orange-dark">
-                    <li>
-                      <Link href={RouteLink.prestationTmaWordPress}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          WordPress
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href={RouteLink.prestationTmaPrestashop}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          Prestashop
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href={RouteLink.prestationTmaOnDemand}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          Maintenance ponctuelle
-                        </span>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div className="hidden lg:flex space-x-2 ml-auto">
-                  <div>
-                    <Image
-                      src={ExpertPrestashop}
-                      width={150}
-                      height={150}
-                      alt="Expert développeur Prestashop"
-                      style={{
-                        maxWidth: '100%',
-                        height: 'auto',
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <Image
-                      src={ExpertWordPress}
-                      width={150}
-                      height={150}
-                      alt="Expert développeur Prestashop"
-                      style={{
-                        maxWidth: '100%',
-                        height: 'auto',
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </LinkItem>
             <LinkItem
               closePrimaryNav={() => setOpen(false)}
               isActive={pathname === RouteLink.portfolio}
               href={RouteLink.portfolio}
               title="Portfolio"
-            >
-              <div className="hidden lg:flex">
-                <div className="pt-1">
-                  <Link href={RouteLink.portfolio}>
-                    <span className={n1TitleClassnames}>
-                      Les différentes thématiques
-                    </span>
-                  </Link>
-                  <ul className="list-disc pl-2 marker:text-orange-dark">
-                    <li>
-                      <Link href={`${RouteLink.portfolio}/wordpress`}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          Projets WordPress
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href={`${RouteLink.portfolio}/prestashop`}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          Projets Prestashop
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href={`${RouteLink.portfolio}/application-web/`}>
-                        <span
-                          onClick={() => setOpen(false)}
-                          className={n2TitleClassnames}
-                        >
-                          Projets Symfony & ReactJS
-                        </span>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                <div className="ml-auto">
-                  <FeaturedProjectMenu
-                    image={FeaturedProjectImage}
-                    title="Parapharmacie moins chere"
-                    link={`${RouteLink.portfolio}/prestashop/parapharmacie-moins-chere`}
-                  />
-                </div>
-              </div>
-            </LinkItem>
+            />
+
             <LinkItem
               closePrimaryNav={() => setOpen(false)}
               isActive={pathname === RouteLink.blog}
@@ -316,15 +159,13 @@ export default function NavPrimary({ isSticky = false }: Props) {
             <Link href={RouteLink.contact}>
               <span
                 onClick={() => setOpen(false)}
-                className="mt-2 lg:mt-0 inline-flex py-1 px-2 bg-orange uppercase text-gray-darker font-medium"
+                className="mt-2 lg:mt-0 inline-flex py-1 px-2 bg-orange uppercase font-medium text-white hover:bg-orange-dark"
               >
-                Contactez-moi
+                Contact Us
               </span>
             </Link>
 
-            <div className="block lg:hidden text-3xl text-orange font-bold pt-2">
-              06 51 89 89 17
-            </div>
+            <div className="block lg:hidden text-3xl text-orange font-bold pt-2">06 51 89 89 17</div>
             <button
               type="button"
               className="block lg:hidden w-full"
@@ -351,8 +192,11 @@ export default function NavPrimary({ isSticky = false }: Props) {
                 </svg>
               </div>
             </button>
+
           </div>
+
         </div>
+
       </div>
     </div>
   );

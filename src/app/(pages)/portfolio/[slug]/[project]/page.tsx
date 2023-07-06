@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props) {
   const { data } = await getSingleProject(params.project);
   return {
     title: `${data.projet.title} - Portfolio`,
-    description: data.projet.detail.excerpt,
+    // description: data.projet.detail.excerpt,
     alternates: {
       canonical: getCanonicalUrl(
         `${RouteLink.portfolio}/${data.projet.supports.edges[0]?.node.slug}/${data.projet.slug}`
@@ -87,11 +87,11 @@ export default async function Page({ params }: Props) {
 
             <a
               className="block text-3xl"
-              href={data.detail.websiteLink}
+              href={data.detail.websitelink}
               target="_blank"
               rel="noreferrer nofollow"
             >
-              {data.detail.websiteLink.replace(/(^\w+:|^)\/\//, '')}
+              {data.detail.websitelink.replace(/(^\w+:|^)\/\//, '')}
             </a>
 
             <div className="my-4 text-lg">
@@ -119,11 +119,10 @@ export default async function Page({ params }: Props) {
                     key={techno.node.name}
                     className="flex items-center flex-col w-[80px] text-center"
                   >
-                    {techno.node.acfDetail?.image?.sourceUrl && (
+                    {techno.node.acfdetail?.image?.sourceUrl && (
                       <div className="w-6 h-6 relative">
-                        {/* @ts-ignore */}
                         <Image
-                          src={techno.node.acfDetail.image.sourceUrl}
+                          src={techno.node.acfdetail.image.sourceUrl}
                           alt={techno.node.name}
                           fill
                           sizes="100vw"
@@ -136,6 +135,7 @@ export default async function Page({ params }: Props) {
                 ))}
               </div>
             </div>
+            
             <div>
               <div className="text-white text-xl font-light uppercase tracking-widest">
                 Missions
@@ -168,7 +168,7 @@ export default async function Page({ params }: Props) {
         )}
 
         <SectionTitle
-          content={`Retrouvez des projets similaires développés avec ${data?.supports?.edges[0]?.node.name} qui pourrait correspondre à ${data.title}`}
+          content={`Find similar projects developed with ${data?.supports?.edges[0]?.node.name} which could correspond to  ${data.title}`}
           title={data?.supports?.edges[0]?.node.name || ''}
         />
 

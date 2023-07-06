@@ -23,6 +23,7 @@ type VariableProps = {
 
 export const fetcher = cache(
   async (query: string, variables: VariableProps = {}) => {
+    // console.log(query, 'this is the query')
     const headers: HeaderType = { 'Content-Type': 'application/json' };
 
     const res = await fetch(getApi, {

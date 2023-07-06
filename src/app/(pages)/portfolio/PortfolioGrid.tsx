@@ -18,7 +18,7 @@ export default async function PortfolioGrid({ projects }: Props) {
           title={node.title}
           slug={node.slug}
           support={node.supports?.edges[0]?.node}
-          isPrivate={node.status === 'private'}
+          isPrivate={node.status === 'publish'}
         />
       ))}
     </div>

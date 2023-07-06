@@ -18,7 +18,7 @@ export default function ExpertiseItem({ image, title, excerpt, link }: Props) {
       <h3 className="text-white font-medium text-xl md:text-2xl">{title}</h3>
       <div className="col-auto">
         <p className="mb-1 text-sm sm:text-md md:text-base">{excerpt}</p>
-        <ButtonLink href={link}>En savoir plus</ButtonLink>
+        <ButtonLink href={link}>Learn More </ButtonLink>
       </div>
     </div>
   );

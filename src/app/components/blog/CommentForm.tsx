@@ -115,7 +115,7 @@ export default function CommentForm({ postId, parent, parentAuthor }: Props) {
             submit
             className="button py-3 px-4 w-full md:w-auto"
           >
-            Envoyer mon message
+            Send
           </Button>
 
           {state.success && (

@@ -3,10 +3,20 @@ import Image from 'next/image';
 import Link from '@component/NoScrollLink';
 import { RouteLink } from '@lib/route';
 
-import LogoWhite from '../../../public/logo-white.svg';
-import Socials from '../components/Socials';
+// import LogoWhite from '../../../public/images/logo.png';
 
-export default function Footer() {
+import { FooterContent, HeaderMenuContent } from '@type/graphql';
+import {FooterData} from '@graphql-query/footer-data.graphql';
+import { fetcher } from '@util/index';
+// import {HeaderMenuItemsPrimary} from '@graphql-query/header-menu.graphql';
+
+const getFooterData = (id:string):Promise<FooterContent>=>fetcher(FooterData,{id:id})
+// const getHeader = (id:string):Promise<HeaderMenuContent>=>fetcher(HeaderMenuItemsPrimary,{id:id})
+
+export default async function Footer() {
+  const {data} = await getFooterData('cG9zdDoxNjU=');
+  // const {data:{menu}} = await getHeader('dGVybToxMA==');
+  // console.log(data, 'data is there...')
   return (
     <div className="mt-5">
       <svg
@@ -39,15 +49,16 @@ export default function Footer() {
           <use xlinkHref="#gentle-wave" x="48" y="7" fill="#141414" />
         </g>
       </svg>
-
+      
       <div className="bg-gray-darker pt-3 pb-6">
         <div className="container flex flex-col sm:flex-row justify-between">
           <div>
             <div>
-              <Image
-                className="opacity-30"
-                src={LogoWhite}
+              <Image               
+                src={data.page.footer.footerLogo.sourceUrl}
                 alt="inRage - Pascal GAULT"
+                 width={200}
+                height={100}
                 style={{
                   maxWidth: '100%',
                   height: 'auto',
@@ -55,11 +66,18 @@ export default function Footer() {
               />
             </div>
             <div className="mt-1 grid grid-flow-col gap-1 text-sm text-orange justify-start">
-              <Link href={RouteLink.aboutMe}>
-                <span>A propos de moi</span>
+              {
+                // menu.menuItems.nodes.map(({label})=>
+                //   <Link href={RouteLink.aboutMe}>
+                //     <span>{label}</span>
+                //   </Link>
+                // )
+              }
+              <Link href={RouteLink.home}>
+                <span>Home</span>
               </Link>
-              <Link href={RouteLink.prestations}>
-                <span>Prestations</span>
+              <Link href={RouteLink.aboutMe}>
+                <span>About Us</span>
               </Link>
               <Link href={RouteLink.portfolio}>
                 <span>Portfolio</span>
@@ -68,14 +86,85 @@ export default function Footer() {
                 <span>Blog</span>
               </Link>
               <Link href={RouteLink.contact}>
-                <span>Contactez-moi</span>
+                <span>Contact Us</span>
               </Link>
             </div>
             <div className="my-2">
-              <Socials />
+              {/* <Socials /> */}
+              
+              <div className="grid grid-flow-col gap-2 items-center justify-start">
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.facebok}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.facebookIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Facebook Icon"
+                  />
+                </a>
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.instagram}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.instagramIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Instagram Icon"
+                  />
+                </a>
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.pintrest}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.pintrestIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Pinterest Icon"
+                  />
+                </a>
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.twitter}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.twitterIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Twitter Icon`"
+                  />
+                </a>
+              </div>
             </div>
-            <div>© 2008-2021 - inRage SARL. Tous droits réservés.</div>
-            <a
+            <div>{data.page.footer.copyright}</div>
+            {/* <a
               href="https://github.com/akiletour/inrage"
               className="text-white block md:flex mt-2 items-center"
             >
@@ -92,33 +181,34 @@ export default function Footer() {
                   }}
                 />
               </span>
-            </a>
+            </a> */}
             <div className="mt-1 grid grid-flow-col gap-2 justify-start text-sm text-orange">
-              <Link href={RouteLink.legals}>
-                <span>Mentions légales</span>
+              <Link href={RouteLink.terms}>
+                <span>Terms & Condition</span>
               </Link>
-              <Link href={RouteLink.sitemap}>
-                <span>Plan du site</span>
+              <Link href={RouteLink.policy}>
+                <span>Privacy Policy</span>
               </Link>
             </div>
           </div>
           <div className="text-center sm:text-right flex sm:items-end flex-col pt-2">
             <Link href={RouteLink.contact}>
-              <span className="button">Demandez un devis</span>
+              <span className="button">Contact Us</span>
             </Link>
             <div className="my-2 text-3xl font-bold text-orange">
-              06 51 89 89 17
+              <a href={`tel:${data.page.footer.phone}`}>{data.page.footer.phone}</a>
             </div>
             <div className="text-center md:text-right text-sm">
-              SIRET : 813 430 592 00010
-              <br />
-              R.C.S : La Rochelle 813 430 592
-              <br />
-              <br />
-              10-14 rue Jean Perrin,
-              <br />
-              17000 LA ROCHELLE
-              <br />
+              {/* <div className="mt-2 text-xl text-gray-light"
+                dangerouslySetInnerHTML={{__html:  data.page.footer.address}}
+              /> */}
+              {data.page.footer.address}
+              <p><a href={`mailto:${data.page.footer.email}`}>{data.page.footer.email}</a></p>
+              
+              {/* {data.page.socialMedia.facebok}
+              {data.page.socialMedia.facebookIcon.sourceUrl} */}
+
+
             </div>
           </div>
         </div>

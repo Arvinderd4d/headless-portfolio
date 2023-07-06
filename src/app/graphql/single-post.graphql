@@ -14,7 +14,7 @@ query getSingleArticle($id: ID!) {
 		}
 		seo {
 			title
-			metaDesc
+			metadesc
 			canonical
 		}
 	}

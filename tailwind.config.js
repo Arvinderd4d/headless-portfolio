@@ -22,8 +22,8 @@ module.exports = {
         light: '#b3b3b3',
       },
       orange: {
-        DEFAULT: '#e57e21',
-        dark: '#8f4d11',
+        DEFAULT: '#cf212a',
+        dark: '#991b22',
       },
     },
     extend: {

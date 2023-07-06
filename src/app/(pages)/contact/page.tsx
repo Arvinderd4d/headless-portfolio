@@ -1,6 +1,11 @@
+import Image from 'next/image';
 import ContactForm from '@component/ContactForm';
 import Layout from '@component/Layout';
 import { RouteLink, getCanonicalUrl } from '@lib/route';
+
+import { FooterContent } from '@type/graphql';
+import {FooterData} from '@graphql-query/footer-data.graphql';
+import { fetcher } from '@util/index';
 
 export const metadata = {
   title: 'Un projet web ? Parlons-en - Contactez-moi - Pascal GAULT',
@@ -10,47 +15,106 @@ export const metadata = {
     canonical: getCanonicalUrl(RouteLink.contact),
   },
 };
+const getFooterData = (id:string):Promise<FooterContent>=>fetcher(FooterData,{id:id})
 
-export default function Contact() {
+export default async function Contact() {
+  const {data} = await getFooterData('cG9zdDoxNjU=');
   return (
-    <Layout title="Contactez-moi">
+    <Layout title="Contact Us">
       <div className="container flex flex-col sm:flex-row">
         <div className="flex-none sm:w-[260px] text-center sm:text-right mb-6 sm:mb-0 sm:mr-8">
-          <div className="text-orange font-bold text-4xl">
-            inRage <span className="font-light">SARL</span>
+          <div className="text-center sm:text-right">
+          <Image               
+                src={data.page.footer.footerLogo.sourceUrl}
+                alt="inRage - Pascal GAULT"
+                width={200}
+                height={100}
+                style={{
+                  display: 'inline-block',
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
+              />
           </div>
-          <p className="leading-6 text-lg text-gray-light mt-1">
-            Développeur et créateur
-            <br />
-            Freelance sur La Rochelle
-          </p>
 
-          <p className="mt-5">
-            Siret: 813 430 592 00010
-            <br />
-            NAF: 6201Z
-            <br />
-            Immatriculé au RCS :
-            <br />
-            La Rochelle 813 430 592
-          </p>
+          <p className='mt-2'>{data.page.footer.address}</p>
 
-          <p className="mt-2 mb-4">
-            10 rue Jean Perrin
-            <br />
-            17000 LA ROCHELLE
-          </p>
-
-          <p className="leading-5">
-            Vous n&apos;êtes pas fan des e-mails ?
-            <br />
-            N&apos;hésitez pas à me téléphoner pour discuter de votre projet
-          </p>
-
-          <div className="text-orange font-bold text-3xl mt-2">
-            06 51 89 89 17
+          <div className="text-orange mt-2">
+            <a href={`tel:${data.page.footer.phone}`}>{data.page.footer.phone}</a>
           </div>
-          <div className="text-sm">du lundi au samedi de 10h à 19h</div>
+          <div className="text-orange">
+            <a href={`mailto:${data.page.footer.email}`}>{data.page.footer.email}</a>
+          </div>
+          <div className="grid grid-flow-col gap-2 items-center justify-center sm:justify-end mt-2">
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.facebok}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.facebookIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Facebook Icon"
+                  />
+                </a>
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.instagram}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.instagramIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Instagram Icon"
+                  />
+                </a>
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.pintrest}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.pintrestIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Pinterest Icon"
+                  />
+                </a>
+                <a        
+                  className="text-white transition hover:text-orange"
+                  href={data.page.socialMedia.twitter}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Image
+                    src={data.page.socialMedia.twitterIcon.sourceUrl}
+                    width={22}
+                    height={16}            
+                    style={{
+                      maxWidth: '100%',
+                      height: 'auto',
+                    }}
+                    alt="Twitter Icon`"
+                  />
+                </a>
+              </div>
         </div>
         <div className="flex-1">
           <ContactForm lg />

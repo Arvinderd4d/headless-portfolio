@@ -5,7 +5,8 @@ query PortfolioCategories {
 				slug
 				name
 				id
-				acfSupport {
+				count
+				acfsupport {
 					image {
 						sourceUrl
 					}

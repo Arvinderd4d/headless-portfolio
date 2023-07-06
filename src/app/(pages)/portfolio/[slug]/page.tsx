@@ -52,7 +52,7 @@ export default async function Page({ params }: Props) {
       <div className="container">
         <SectionTitle
           content={
-            "Pour toute demande ou devis, n'hésitez pas à nous contacter en remplissant le formulaire ci-dessous, nous serons ravis de vous répondre."
+            "For any request or quote, do not hesitate to contact us by filling out the form below, we will be happy to answer you."
           }
           title={data.support.name}
         />

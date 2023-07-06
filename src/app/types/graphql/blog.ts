@@ -20,9 +20,10 @@ export interface SinglePostType {
       content: string;
       title: string;
       slug: string;
+      featuredImage:FeaturedImageNode;
       seo: {
         title: string;
-        metaDesc: string;
+        metadesc: string;
         canonical: string;
       };
     };

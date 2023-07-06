@@ -7,6 +7,8 @@ import Link from '@component/NoScrollLink';
 import { RouteLink } from '@lib/route';
 import 'moment/locale/fr';
 import { ArticleList } from '@type/graphql';
+import Images from '@image/placeholder.jpg';
+
 
 moment.locale('fr');
 
@@ -18,7 +20,7 @@ export default function ArticleItem({
   slug,
 }: ArticleList) {
   const formattedDate = moment(date);
-
+  
   return (
     <div className="relative flex flex-col">
       <div className="absolute top-1 w-6 text-center left-1 z-10 bg-white">
@@ -29,20 +31,42 @@ export default function ArticleItem({
           {formattedDate.format('MMM').substring(0, 3)}
         </div>
       </div>
-      <Link href={`${RouteLink.blog}/${slug}`}>
-        <span>
-          <Image
-            src={featuredImage.node.sourceUrl}
-            width={595}
-            height={265}
-            alt={title}
-            style={{
-              maxWidth: '100%',
-              height: 'auto',
-            }}
-          />
-        </span>
-      </Link>
+      
+      {
+        featuredImage?.node?.sourceUrl ? (
+          <Link href={`${RouteLink.blog}/${slug}`}>
+            <span>
+              <Image
+                src={featuredImage.node.sourceUrl}
+                width={595}
+                height={265}
+                alt={title}
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
+              />
+            </span>
+          </Link>
+          )
+          :
+          <Link href={`${RouteLink.blog}/${slug}`}>
+            <span>
+              <Image
+            
+                src={Images}
+                width={595}
+                height={265}
+                alt={title}
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
+              />
+            </span>
+          </Link>
+
+        }
       <h3 className="text-white text-2xl font-medium mt-1">{title}</h3>
       <div
         className="mt-1 mb-2"
@@ -52,7 +76,7 @@ export default function ArticleItem({
           }),
         }}
       />
-      <ButtonLink href={`${RouteLink.blog}/${slug}`}>Lire la suite</ButtonLink>
+      <ButtonLink href={`${RouteLink.blog}/${slug}`}>Learn More</ButtonLink>
     </div>
   );
 }

@@ -55,7 +55,7 @@ export default function ContactForm({ lg = false }: { lg?: boolean }) {
             className={`input-field ${
               errors.name ? 'border-red' : 'border-gray'
             }`}
-            placeholder="Prénom NOM"
+            placeholder="First Name"
             type="text"
             {...register('name', { required: true })}
           />
@@ -71,7 +71,7 @@ export default function ContactForm({ lg = false }: { lg?: boolean }) {
             className={`input-field ${
               errors.email ? 'border-red' : 'border-gray'
             }`}
-            placeholder="Votre adresse e-mail"
+            placeholder="Email Address"
             type="email"
             {...register('email', { required: true })}
           />
@@ -87,7 +87,7 @@ export default function ContactForm({ lg = false }: { lg?: boolean }) {
             className={`input-field ${
               errors.phone ? 'border-red' : 'border-gray'
             }`}
-            placeholder="Numéro de téléphone"
+            placeholder="TelePhone Number"
             type="tel"
             {...register('phone', { required: true })}
           />
@@ -104,7 +104,8 @@ export default function ContactForm({ lg = false }: { lg?: boolean }) {
             className={`input-field min-h-[200px] h-full ${
               errors.content ? 'border-red' : 'border-gray'
             }`}
-            placeholder="Laissez-moi un petit message"
+            placeholder="Leave me a little message
+            "
             {...register('content', { required: true })}
           />
           {errors.content && (
@@ -128,7 +129,7 @@ export default function ContactForm({ lg = false }: { lg?: boolean }) {
           isLoading={state.loading}
           className="button py-3 px-4 w-full md:w-auto"
         >
-          Envoyer mon message
+          Send
         </Button>
       </div>
     </form>

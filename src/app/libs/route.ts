@@ -1,5 +1,5 @@
 export const RouteLink = {
-  aboutMe: '/a-propos-de-moi',
+  aboutMe: '/about',
   prestations: '/prestations',
   get prestationWeb() {
     return `${this.prestations}/creation-site-web`;
@@ -8,7 +8,7 @@ export const RouteLink = {
     return `${this.prestations}/maintenance-site-internet`;
   },
   get prestationWordPress() {
-    return `${this.prestationWeb}/site-wordpress`;
+    return '/contact';
   },
   get prestationPrestashop() {
     return `${this.prestationWeb}/site-prestashop`;
@@ -25,10 +25,12 @@ export const RouteLink = {
   get prestationTmaOnDemand() {
     return `${this.prestationTma}/maintenance-ponctuelle`;
   },
+  home:'/',
   portfolio: '/portfolio',
   contact: '/contact',
   blog: '/blog',
-  legals: '/mentions-legales',
+  terms: '/terms',
+  policy: '/policy',
   sitemap: '/plan-du-site',
 };
 

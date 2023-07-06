@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+// import HeaderGraphql from '@layout/HeaderGraphql';
 import Footer from '@layout/Footer';
 
 import './globals.css';
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* <HeaderGraphql /> */}
         <div>{children}</div>
         <Footer />
       </body>

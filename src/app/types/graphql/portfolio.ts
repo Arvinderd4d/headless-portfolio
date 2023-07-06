@@ -46,7 +46,8 @@ export interface PortfolioCategory {
   slug: string;
   name: string;
   id: number;
-  acfSupport: {
+  count: number;
+  acfsupport: {
     image: {
       sourceUrl: string;
     };
@@ -55,7 +56,7 @@ export interface PortfolioCategory {
 
 interface TechnologyType {
   name: string;
-  acfDetail: {
+  acfdetail: {
     image: {
       sourceUrl: string;
     };
@@ -84,7 +85,7 @@ export interface SingleProject {
         }>;
       };
       detail: {
-        websiteLink: string;
+        websitelink: string;
         year: string;
         missions: string;
         excerpt: string;

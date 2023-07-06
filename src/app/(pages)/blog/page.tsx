@@ -18,8 +18,9 @@ const allPosts = (): Promise<List<ArticleList>> => fetcher(posts);
 
 export default async function BlogList() {
   const { data } = await allPosts();
+ 
   return (
-    <Layout title="Blog sur le développement web">
+    <Layout title="Blog">
       <div className="container mb-10">
         <div className="grid md:grid-cols-2 gap-4 -mb-8 mt-6">
           {data?.posts?.edges.map(

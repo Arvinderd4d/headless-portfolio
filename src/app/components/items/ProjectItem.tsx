@@ -36,11 +36,11 @@ export default function ProjectItem({
               height: 'auto',
             }}
           />
-          {isPrivate && (
+          {/* {isPrivate && (
             <div className="absolute inset-0 bg-gray-dark opacity-50 z-50 flex items-center justify-center">
-              <div className="text-white text-center text-2xl">Private</div>
+              <div className="text-white text-center text-2xl">Digital4Design</div>
             </div>
-          )}
+          )} */}
         </div>
         <div
           className={`${
