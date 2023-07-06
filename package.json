@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@next/swc-wasm-nodejs": "^13.4.7",
-    "@sentry/nextjs": "^7.51.0",
+   
     "@types/prismjs": "^1.26.0",
     "akismet-api": "^6.0.0",
     "eslint-plugin-jest-dom": "^4.0.3",
