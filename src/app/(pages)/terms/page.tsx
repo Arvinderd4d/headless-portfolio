@@ -11,11 +11,11 @@ export const metadata = {
   },
 };
 
-const LegalTitle = ({ children }: { children: string }) => {
-  return (
-    <h2 className={'mt-6 mb-2 text-white font-bold text-3xl'}>{children}</h2>
-  );
-};
+// const LegalTitle = ({ children }: { children: string }) => {
+//   return (
+//     <h2 className={'mt-6 mb-2 text-white font-bold text-3xl'}>{children}</h2>
+//   );
+// };
 
 const getTermsData = (id:string):Promise<TermsData>=>fetcher(TermsContent,{id:id});
 
